@@ -1,0 +1,267 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<style>
+  #filters {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    cursor: pointer;
+  }
+  .filter {
+    text-align: center;
+    margin-right: 2rem;
+    opacity: 0.7;
+    position: relative;
+  }
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  .filter:hover::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #6d6d6d;
+  }
+  .filter-text {
+    font-size: 0.85rem;
+    line-height: 1rem;
+    font-weight: 500;
+    margin-top: 0.75rem;
+  }
+  .tax-toggle {
+    border: 1px solid #dddddd;
+    align-content: center;
+    align-self: centers;
+    padding: 10px 16px;
+    border-radius: 12px;
+    max-height: 48px;
+  }
+</style>
+<body>
+  <div class="container-fluid">
+    <div id="filters">
+      <div class="filter">
+        <img
+          src="/images/filter/trending.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Trending</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/amazingpool.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Amazing Pools</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/amazingview.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Amazing Views</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/beach.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Beaches</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/beachfront.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Beach Front</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/bedandbreakfast.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Bed &amp; Breakfast</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/boats.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Boats</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/castle.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Castle</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/countryside.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Country Side</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/farms.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Farms</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/lakefront.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Lake Front</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/luxury.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Luxury</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/mansion.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Mansion</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/room.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Rooms</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/tinyhome.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Tiny Homes</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/treehouse.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Tree House</p>
+      </div>
+      <div class="filter">
+        <img
+          src="/images/filter/topcity.jpg"
+          width="24"
+          height="24"
+          class="filter-icon"
+        />
+        <p class="filter-text">Top Cities</p>
+      </div>
+      <div class="tax-toggle">
+        <div class="form-check form-switch form-check-reverse">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            id="flexSwitchCheckReverse"
+            style="cursor: pointer"
+          />
+          <label class="form-check-label" for="flexSwitchCheckReverse"
+            >Display total after taxes</label
+          >
+        </div>
+      </div>
+    </div>
+    <div class="row row-cols-lg-6 row-cols-md-3 row-cols-sm-2 row-cols-xs-1">
+      <% for(let list of allListings) { %>
+      <a href="/listings/<%= list._id %>" class="list-link">
+        <div class="col mb-4">
+          <div class="card" style="height: 100%">
+            <img
+              src="<%= list.image.url %>"
+              class="card-img-top"
+              alt="property-image"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= list.title %></h5>
+              <p class="card-text" style="color: #6a6a6a">
+                <%= list.location %> , <%= list.country %>
+              </p>
+              <div class="d-flex justify-content-between">
+                <p
+                  class="card-text property-price"
+                  data-price="<%= list.price %>"
+                >
+                  &#8377; <%= list.price.toLocaleString("en-IN") %> / night
+                  (exclusive tax)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <% } %>
+    </div>
+  </div>
+  <script>
+    let taxSwitch = document.getElementById("flexSwitchCheckReverse");
+    taxSwitch.addEventListener("click", () => {
+      let totalPriceElements = document.querySelectorAll(".property-price");
+      if (taxSwitch.checked) {
+        totalPriceElements.forEach((element) => {
+          let price = parseFloat(element.getAttribute("data-price"));
+          let tax = price * 0.18;
+          let total = price + tax;
+          element.innerHTML = `&#8377; ${total.toLocaleString(
+            "en-IN"
+          )} / night (inclusive 18% tax)`;
+        });
+      } else {
+        totalPriceElements.forEach((element) => {
+          let price = parseFloat(element.getAttribute("data-price"));
+          element.innerHTML = `&#8377; ${price.toLocaleString(
+            "en-IN"
+          )} / night (exclusive tax)`;
+        });
+      }
+    });
+  </script>
+</body>

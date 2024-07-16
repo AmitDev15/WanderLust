@@ -1,0 +1,62 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row">
+  <div class="col-4 offset-4">
+    <h3>Welcome to WanderLust</h3>
+    <form method="POST" action="/signup" class="needs-validation" novalidate>
+      <div class="my-3">
+        <label for="username" class="form-label">Username</label>
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1"
+            ><i class="fa-solid fa-user"></i
+          ></span>
+          <input
+            name="username"
+            id="username"
+            type="text"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="invalid-feedback">Please enter a valid username</div>
+      </div>
+      <div class="my-3">
+        <label for="email" class="form-label">Email</label>
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1"
+            ><i class="fa-solid fa-envelope"></i
+          ></span>
+          <input
+            name="email"
+            id="email"
+            type="email"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="invalid-feedback">Please enter a valid email address</div>
+      </div>
+      <div class="my-3">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <span class="input-group-text" id="basic-addon1"
+            ><i class="fa-solid fa-lock"></i
+          ></span>
+          <input
+            name="password"
+            id="password"
+            type="password"
+            class="form-control"
+            required
+          />
+        </div>
+        <div class="invalid-feedback">Please enter a valid password</div>
+      </div>
+      <div class="my-3 col-md-12">
+        <button class="add-property-btn">
+          <img src="/images/add-user.svg" /> Join WanderLust Family
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

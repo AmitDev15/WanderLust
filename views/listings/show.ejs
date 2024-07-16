@@ -1,0 +1,180 @@
+<% layout("/layouts/boilerplate") %>
+<script>
+  let mapToken = "<%= process.env.MAP_TOKEN %>";
+  const latLang = <%- JSON.stringify(listing) %>;
+</script>
+  <body>
+    <div class="container-fluid">
+      <div class="row my-3">
+        <div class="col-md-8 offset-2">
+          <h3>Listing Detail</h3>
+          <div class="list-card">
+            <div class="row">
+              <div class="col-md-6">
+                <img src="<%= listing.image.url %>" class="card-img-top" alt="property-image" />
+              </div>
+              <div class="col-md-6 list-details">
+                <div class="title-with-star">
+                  <h1>
+                  <%= listing.title %>
+                </h1>
+                  <div class="rating-stars">
+                    <% 
+                      function calculateAverageRating(reviews) {
+                        if (reviews.length === 0) {
+                          return 0;
+                        }
+                        const total = reviews.reduce((accumulator, review) => accumulator + review.rating, 0);
+                        return total / reviews.length;
+                      }
+                      const averageRating = calculateAverageRating(listing.reviews);
+                      const roundedRating = Math.round(averageRating * 10) / 10;
+                    %>
+                    <span class="rating-number">
+                      <span class="fa-solid fa-star"></span>
+                      <%= roundedRating.toFixed(1) %>
+                    </span>               
+                  </div>
+                </div>
+                <div class="row my-3">
+                  <div class="col-md-5">
+                    <h5 class="list-title">
+                      <%= listing.location %> , <%= listing.country %>
+                    </h5>
+                  </div>
+                  <div class="col-md-3" style="text-align: center">
+                    <h5 class="list-title">
+                      <%= listing.category %>
+                    </h5>
+                  </div>
+                  <div class="col-md-4" style="text-align: end">
+                    <h5 class="list-title">
+                      &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                    </h5>
+                  </div>
+                </div>
+                <div class="hline">
+                  <div class="host-area">
+                  <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg" alt="Profile Picture"/>
+                    <p>Hosted By: <%= listing.owner.username %></p>
+                    </div>
+                </div>
+                <div class="hline" style="margin: 0.5rem 0px 0px 0px;">
+                </div>
+                <div>
+                  <p class="card-text my-3 list-description">
+                    <%= listing.description %>
+                  </p>
+                </div>
+                <% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
+                <div class="row mt-auto">
+                  <div class="col-md-6">
+                    <a href="/listings/<%= listing._id %>/edit" class="list-btn">
+                      <i class="fa-solid fa-pen-to-square"></i>Edit Your Property
+                    </a>
+                  </div>
+                  <div class="col-md-6">
+                    <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+                      <button class="list-btn""><i class=" fa-solid fa-trash-can"></i>Delete Your Property</button>
+                    </form>
+                  </div>
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8 offset-2 review-container">
+        <div class="horizontal-line" style="border-top-color: rgb(221, 221, 221);"></div>
+        <% if(currentUser) { %>
+        <h3>Leave A Review</h3>
+        <form method="post" action="/listings/<%= listing._id %>/reviews" class="needs-validation" novalidate>
+          <div class="my-3">
+            <label for="rating" class="form-label">Rating (1 to 5):</label>
+            <fieldset class="starability-grow">
+              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+          </div>
+          <div class="my-3">
+            <label for="comment" class="form-label">Comment</label>
+            <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please add some comments for review</div>
+          </div>
+          <button class="list-btn mt-4"><img src="/images/add-review.svg" class="me-3" />Submit Your Review</button>
+        </form>
+        <% } else { %>
+        <h3>Please <a href="/login" class="login-required">Login</a> to leave a review</h3>
+        <% } %>
+        <div class="horizontal-line" style="border-top-color: rgb(221, 221, 221);"></div>
+        <div class="d-flex justify-content-between align-items-center">
+          <% if (listing.reviews.length > 0) { %>
+            <h3>All Reviews (<%= listing.reviews.length %>)</h3>
+          <% } else { %>
+            <h3>No reviews (yet)</h3>
+          <% } %>
+        </div>
+        <div class="row">
+        <% for(let review of listing.reviews) { %>
+          <div class="mt-4 col-md-6">
+            <div class="review-custom-card">
+              <div class="review-card-header">
+                <div class="review-profile-info">
+                  <img src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg"
+                    width="50" height="50" class="user-image" alt="Profile Picture">
+                  <div>
+                    <h5 class="mb-0"><%= review.author.username || 'Anonymous' %></h5>
+                    <% 
+                      const date=new Date(review.createdAt); 
+                      const options={ weekday: 'long' , day: '2-digit' ,month: 'long' , year: 'numeric' , hour: '2-digit' , minute: '2-digit' , hour12: true }; 
+                      const formattedDate=date.toLocaleString('en-IN', options); 
+                    %>
+                      <small class="text-muted">
+                        <%= formattedDate.replace(',', '' ).replace(' at', ',' ) %>
+                      </small>
+                  </div>
+                </div>
+                <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                  <button class="btn"><i class="fa-solid fa-trash" style="color:#e61e4d;"></i></button>
+                </form>
+              </div>
+              <div class="review-card-body">
+                <div class="review-rating">
+                  <% for(let i=1; i <=5; i++) { %>
+                    <% if (i <=review.rating) { %>
+                      <span class="fa-solid fa-star"></span>
+                      <% } else { %>
+                        <span class="fa-regular fa-star"></span>
+                        <% } %>
+                          <% } %>
+                </div>
+                <div class="comment">
+                  <p>
+                    <%= review.comment %>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+      
+    </div>
+    <div class="col-md-8 offset-2">
+      <div class="horizontal-line" style="border-top-color: rgb(221, 221, 221);"></div>
+      <h2>Where you’ll be</h2>
+      <div id="map"></div>
+    </div>
+    <script src="/js/map.js"></script>
+  </body>

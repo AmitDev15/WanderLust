@@ -1,0 +1,68 @@
+<% layout("/layouts/boilerplate") %>
+
+  <body>
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h3>Create a New Listing</h3>
+        <form method="POST" action="/listings" class="needs-validation" enctype="multipart/form-data" novalidate>
+          <div class="my-3">
+            <label for="title" class="form-label">Title</label>
+            <input name="title" type="text" class="form-control" required />
+            <div class="invalid-feedback">Please enter a valid title</div>
+          </div>
+          <div class="my-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" class="form-control" required></textarea>
+            <div class="invalid-feedback">Please enter a valid description</div>
+          </div>
+          <div class="my-3">
+            <label for="image" class="form-label">Upload Property Image</label>
+            <div class="input-group">              
+              <input name="image" type="file" class="form-control" required/>
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="my-3 col-md-6">
+              <label for="category" class="form-label">Category</label>
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-layer-group"></i></i></span>
+                <input name="category" type="text" class="form-control" required />
+                <div class="invalid-feedback">Please enter a valid category</div>
+              </div>
+            </div>
+            <div class="my-3 col-md-6">
+              <label for="price" class="form-label">Price</label>
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-indian-rupee-sign"></i></span>
+                <input name="price" type="text" class="form-control" required />
+                <span class="input-group-text" id="basic-addon2">/ night</span>
+                <div class="invalid-feedback">Please enter a valid price</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="my-3 col-md-6">
+              <label for="location" class="form-label">Location</label>
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-location-dot"></i></i></span>
+                <input name="location" type="text" class="form-control" required />
+                <div class="invalid-feedback">Please enter a valid location</div>
+              </div>
+            </div>
+            <div class="my-3 col-md-6">
+              <label for="country" class="form-label">Country</label>
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-earth-americas"></i></i></span>
+                <input name="country" type="text" class="form-control" required />
+                <div class="invalid-feedback">Please enter a valid country</div>
+              </div>
+            </div>
+          </div>
+          <div class="my-3 col-md-12">
+            <button class="add-property-btn"><img src="/images/home-add.svg" /> WanderLust Your Property</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
