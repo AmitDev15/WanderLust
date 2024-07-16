@@ -144,9 +144,11 @@
                       </small>
                   </div>
                 </div>
-                <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-                  <button class="btn"><i class="fa-solid fa-trash" style="color:#e61e4d;"></i></button>
-                </form>
+                <% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
+                  <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                    <button class="btn"><i class="fa-solid fa-trash" style="color:#e61e4d;"></i></button>
+                  </form>
+                <% } %>
               </div>
               <div class="review-card-body">
                 <div class="review-rating">
